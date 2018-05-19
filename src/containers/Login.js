@@ -1,30 +1,26 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import logo from '../logo.svg';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "../styles/Login.css";
+import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import '../styles/Login.css';
+import request from 'superagent';
 
 export default class Login extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
-
-  validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
-  }
-
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
+    this.state = {};
   }
 
   handleSubmit = event => {
     event.preventDefault();
+
+    request
+        .post('http://127.0.0.1:5000/user')
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .send({ username: "Mike", password: "Crispie" })
+        .end(function(err, res){
+        console.log(res.text);
+    });  
 
     // Show NavBar if user successfully logs in
     // this.props.isNavbarHidden(false);
@@ -38,31 +34,13 @@ export default class Login extends Component {
           <h1 className="login-title">Login to Live-Feed</h1>
         </header>
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              value={this.state.password}
-              onChange={this.handleChange}
-              type="password"
-            />
-          </FormGroup>
           <Button
             className="login-button"
             block
             bsSize="large"
-            disabled={!this.validateForm()}
             type="submit"
           >
-            LOGIN
+            Sign in with YouTube account
           </Button>
         </form>
       </div>

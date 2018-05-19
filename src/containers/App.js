@@ -10,12 +10,17 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            navbarHidden: true
+            navbarHidden: true,
+            isAuthenticated: false
         };
     }
 
     isNavbarHidden = hidden => {
         this.setState({ navbarHidden: hidden });
+    }
+
+    userAuthenticated = authenticated => {
+        this.setState({ isAuthenticated: authenticated });
     }
 
     render() {
