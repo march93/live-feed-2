@@ -4,6 +4,7 @@ import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
 import '../styles/Login.css';
 import request from 'superagent';
 import ReactModalLogin from 'react-modal-login';
+import { googleConfig } from './social-config';
 
 export default class Login extends Component {
   constructor(props) {
@@ -30,13 +31,32 @@ export default class Login extends Component {
   }
   
   onLoginSuccess(method, response) {
-    console.log('logged successfully with ' + method, response);
+    console.log('logged successfully with ' + method);
+
+    request
+        .get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + response.access_token)
+        .end(function(err, res){
+        if (res.body) {
+            // Verify Access Token
+            request
+                // .post('http://127.0.0.1:5000/v1/api/tokenVerify')
+                .post('http://127.0.0.1:5000/user')
+                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .send({ username: "Mike", password: "Crispie" })
+                .end(function(err, res){
+                console.log(res.text);
+}); 
+        } else {
+            console.log("User's Google info not found");
+        }
+    });
+
     this.finishLoading();
     this.closeModal();
   }
  
   onLoginFail(method, response) {
-    console.log('logging failed with ' + method, response);
+    console.log('logging failed with ' + method);
     this.finishLoading();
     this.setState({
       error: response
@@ -78,11 +98,6 @@ export default class Login extends Component {
   }
 
   render() {
-    const googleConfig = {
-        client_id: '244627938067-pbbvvive8cneqj04pjh6t71rthk8kaul.apps.googleusercontent.com',
-        scope: "https://www.googleapis.com/auth/youtubepartner"
-    };
-
     return (
       <div className="Login">
         <header className="login-header">

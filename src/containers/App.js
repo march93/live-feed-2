@@ -10,7 +10,7 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            navbarHidden: false,
+            navbarHidden: true,
             isAuthenticated: false,
             token: '',
             user: null
