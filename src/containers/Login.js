@@ -31,21 +31,26 @@ export default class Login extends Component {
   }
   
   onLoginSuccess(method, response) {
+    var thisProps = this.props;
     console.log('logged successfully with ' + method);
 
+    // Get Google Access Token
     request
         .get('https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + response.access_token)
         .end(function(err, res){
         if (res.body) {
             // Verify Access Token
             request
-                // .post('http://127.0.0.1:5000/v1/api/tokenVerify')
-                .post('http://127.0.0.1:5000/user')
+                .get('http://127.0.0.1:5000/v1/api/getJWTToken')
                 .set('Content-Type', 'application/x-www-form-urlencoded')
-                .send({ username: "Mike", password: "Crispie" })
-                .end(function(err, res){
-                console.log(res.text);
-}); 
+                .query({ email: res.body.email, token: response.access_token })
+                .end(function(err, response){
+                    if (response.body) {
+                        thisProps.history.push('/streams');
+                        thisProps.isNavbarHidden(false);
+                        thisProps.userAuthenticated(true, response.body.access_token, res.body.email);
+                    }
+            }); 
         } else {
             console.log("User's Google info not found");
         }

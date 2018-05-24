@@ -25,8 +25,8 @@ class NavBar extends Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav pullRight>
-                            <LinkContainer to="/feeds">
-                                <NavItem>Live Feeds</NavItem>
+                            <LinkContainer to="/streams">
+                                <NavItem>Live Streams</NavItem>
                             </LinkContainer>
                             <LinkContainer to="/messages">
                                 <NavItem>Messages</NavItem>
