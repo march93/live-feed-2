@@ -10,7 +10,7 @@ class NavBar extends Component {
     }
 
     logout = event => {
-        this.props.callback(true, false, '', null);
+        this.props.callback(false, '', null);
     }
 
     render() {

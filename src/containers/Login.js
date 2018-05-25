@@ -47,7 +47,6 @@ export default class Login extends Component {
                 .end(function(err, response){
                     if (response.body) {
                         thisProps.history.push('/streams');
-                        thisProps.isNavbarHidden(false);
                         thisProps.userAuthenticated(true, response.body.access_token, res.body.email);
                     }
             }); 
@@ -96,10 +95,7 @@ export default class Login extends Component {
         .send({ username: "Mike", password: "Crispie" })
         .end(function(err, res){
         console.log(res.text);
-    });  
-
-    // Show NavBar if user successfully logs in
-    // this.props.isNavbarHidden(false);
+    });
   }
 
   render() {
