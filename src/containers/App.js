@@ -12,7 +12,8 @@ class App extends Component {
         this.state = {
             isAuthenticated: false,
             token: '',
-            user: null
+            user: null,
+            videoID: ''
         };
     }
 
@@ -28,12 +29,21 @@ class App extends Component {
         });
     }
 
+    setVideo = (videoID) => {
+        this.setState({
+            videoID: videoID
+        });
+    }
+
+    getState = () => {
+        return this.state;
+    }
+
     render() {
         const childProps = {
-            isAuthenticated: this.isAuthenticated,
-            token: this.token,
-            user: this.user,
-            userAuthenticated: this.userAuthenticated
+            userAuthenticated: this.userAuthenticated,
+            setVideo: this.setVideo,
+            getState: this.getState
         };
         return (
             <div>
