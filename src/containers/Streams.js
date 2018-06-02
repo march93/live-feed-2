@@ -30,7 +30,7 @@ export default class Streams extends Component {
     }
 
     updateSearchData(data) {
-        if (this.state.inputValue == '') {
+        if (this.state.inputValue === '') {
             data = [];
         }
 
@@ -86,12 +86,12 @@ export default class Streams extends Component {
                 if (response.body) {
                     this.updateSearchData(response.body);
                 }
-        }.bind(this)); 
+        }.bind(this));
     }
 
     render() {
         const streamData = this.state.videos;
-        let streamList = (streamData.length == 0) ? '' :
+        let streamList = (streamData.length === 0) ? '' :
         <div className="grid-div">
             <GridList cellHeight={180} className="grid-list">
                 {streamData.map(tile => (
@@ -112,7 +112,7 @@ export default class Streams extends Component {
                     variant="raised"
                     color="primary"
                     className="prev-btn"
-                    disabled={this.state.prevToken == ''}
+                    disabled={this.state.prevToken === ''}
                     >
                     Prev
                 </Button>
@@ -121,7 +121,7 @@ export default class Streams extends Component {
                     variant="raised"
                     color="primary"
                     className="next-btn"
-                    disabled={this.state.nextToken == ''}
+                    disabled={this.state.nextToken === ''}
                     >
                     Next
                 </Button>

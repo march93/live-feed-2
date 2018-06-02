@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import '../styles/App.css';
-import { Link } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
-import { Nav, Navbar, NavItem } from "react-bootstrap";
 import Routes from "../Routes";
-import NavBar from './NavBar';
 
 class App extends Component {
     constructor(props){

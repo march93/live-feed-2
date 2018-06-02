@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../logo.svg';
-import { Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import '../styles/Login.css';
 import request from 'superagent';
 import ReactModalLogin from 'react-modal-login';

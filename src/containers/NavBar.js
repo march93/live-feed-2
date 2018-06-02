@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import '../styles/NavBar.css';
-import { Link } from "react-router-dom";
-import { Button, LinkContainer } from "react-router-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 
 class NavBar extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     logout = event => {
         this.props.callback(false, '', null);
     }

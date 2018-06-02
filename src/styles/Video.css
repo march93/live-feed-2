@@ -1,5 +1,42 @@
 .video-frame {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    margin-top: 50px;
+}
+
+.messages-div {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+.paper-container {
+    width: 70%;
+    max-height: 700px;
+    border-radius: 10px !important;
+    overflow: auto;
+    background-color: #e7e7e7 !important;
+}
+
+.messages-list {
+    width: 90%;
+    margin: 0 auto !important;
+}
+
+.messages-list-item {
+    border-radius: 20px;
+    background-color: #FFF;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    
+}
+
+.username {
+    font-weight: 700;
+}
+
+.time-stamp {
+    font-size: 18px;
+    font-family: arial;
+    color: #607D8B;
 }
