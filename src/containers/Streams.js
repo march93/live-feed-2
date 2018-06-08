@@ -48,7 +48,8 @@ export default class Streams extends Component {
         request
             .get('http://127.0.0.1:5000/v1/api/getStreamList')
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .query({ email: state.user, token: state.token, searchValue: this.state.inputValue, pageToken: this.state.prevToken })
+            .set('Authorization', 'Bearer ' + state.token)
+            .query({ email: state.user, searchValue: this.state.inputValue, pageToken: this.state.prevToken })
             .end(function(err, response){
                 if (response.body) {
                     this.updateSearchData(response.body);
@@ -62,7 +63,8 @@ export default class Streams extends Component {
         request
             .get('http://127.0.0.1:5000/v1/api/getStreamList')
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .query({ email: state.user, token: state.token, searchValue: this.state.inputValue, pageToken: this.state.nextToken })
+            .set('Authorization', 'Bearer ' + state.token)
+            .query({ email: state.user, searchValue: this.state.inputValue, pageToken: this.state.nextToken })
             .end(function(err, response){
                 if (response.body) {
                     this.updateSearchData(response.body);
@@ -81,7 +83,8 @@ export default class Streams extends Component {
         request
             .get('http://127.0.0.1:5000/v1/api/getStreamList')
             .set('Content-Type', 'application/x-www-form-urlencoded')
-            .query({ email: state.user, token: state.token, searchValue: this.state.inputValue })
+            .set('Authorization', 'Bearer ' + state.token)
+            .query({ email: state.user, searchValue: this.state.inputValue })
             .end(function(err, response){
                 if (response.body) {
                     this.updateSearchData(response.body);

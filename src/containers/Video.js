@@ -19,43 +19,57 @@ export default class Streams extends Component {
             nextToken: '',
             messagePolling: 0,
             messages: [],
-            time: 0
+            time: 0,
+            interval: null
         };
+        this.block = false;
     }
 
     requestMessages() {
-        request
-            .get('http://127.0.0.1:5000/v1/api/getStreamMessages')
-            .set('Content-Type', 'application/x-www-form-urlencoded')
-            .query({ videoID: this.state.videoID, pageToken: this.state.nextToken })
-            .end(function(err, res){
-                if (res) {
-                    // append new messages and remove duplicates
-                    var newMessages = this.state.messages.concat(res.body.items);
-                    newMessages = _.uniqBy(newMessages, function(e) {
-                        return e.id;
-                    });
+        var state = this.props.getState();
+    
+        // Block multiple API calls that happen at the same time
+        if (!this.block) {
+            this.block = true;
+            request
+                .get('http://127.0.0.1:5000/v1/api/getStreamMessages')
+                .set('Content-Type', 'application/x-www-form-urlencoded')
+                .set('Authorization', 'Bearer ' + state.token)
+                .query({ videoID: this.state.videoID, pageToken: this.state.nextToken })
+                .end(function(err, res){
+                    if (res) {
+                        // append new messages and remove duplicates
+                        var newMessages = this.state.messages.concat(res.body.items);
+                        newMessages = _.uniqBy(newMessages, function(e) {
+                            return e.id;
+                        });
 
-                    // display a max of 100 messages at once
-                    if (newMessages.length > 100) {
-                        newMessages = newMessages.slice(newMessages.length - 100);
+                        // display a max of 100 messages at once
+                        if (newMessages.length > 100) {
+                            newMessages = newMessages.slice(newMessages.length - 100);
+                        }
+
+                        this.setState({
+                            nextToken: res.body.nextPageToken,
+                            messagePolling: res.body.pollingIntervalMillis,
+                            messages: newMessages
+                        });
+
+                        // Unblock API call
+                        this.block = false;
+                    } else {
+                        // Unblock API call
+                        this.block = false;
                     }
-
-                    this.setState({
-                        nextToken: res.body.nextPageToken,
-                        messagePolling: res.body.pollingIntervalMillis,
-                        messages: newMessages
-                    });
-                } else {
-                    // do nothing
-                }
-            }.bind(this));
+                }.bind(this));
+        }
     }
     
     componentDidMount() {
-        this.interval = setInterval(() => {
+        var interval = setInterval(() => {
             this.requestMessages();
         }, this.state.messagePolling);
+        this.setState({ interval: interval });
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -65,7 +79,7 @@ export default class Streams extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        clearInterval(this.state.interval);
     }
 
     render() {
