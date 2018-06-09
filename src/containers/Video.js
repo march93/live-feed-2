@@ -38,7 +38,6 @@ export default class Streams extends Component {
                 .query({ videoID: this.state.videoID, pageToken: this.state.nextToken })
                 .end(function(err, res){
                     if (res) {
-                        console.log(res);
                         // append new messages and remove duplicates
                         var newMessages = this.state.messages.concat(res.body.items);
                         newMessages = _.uniqBy(newMessages, function(e) {
