@@ -41,7 +41,7 @@ export default class Login extends Component {
         if (res.body) {
             // Verify Access Token
             request
-                .get('http://127.0.0.1:5000/v1/api/getJWTToken')
+                .get('https://polar-shelf-99397.herokuapp.com/v1/api/getJWTToken')
                 .set('Content-Type', 'application/x-www-form-urlencoded')
                 .query({ email: res.body.email, token: response.access_token })
                 .end(function(err, response){
@@ -82,19 +82,6 @@ export default class Login extends Component {
   afterTabsChange() {
     this.setState({
       error: null
-    });
-  }
-
-
-  handleSubmit = event => {
-    event.preventDefault();
-
-    request
-        .post('http://127.0.0.1:5000/user')
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-        .send({ username: "Mike", password: "Crispie" })
-        .end(function(err, res){
-        console.log(res.text);
     });
   }
 

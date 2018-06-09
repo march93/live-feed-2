@@ -30,7 +30,7 @@ export default class Search extends Component {
         var state = this.props.getState();
     
         request
-            .get('http://127.0.0.1:5000/v1/api/getMessages')
+            .get('https://polar-shelf-99397.herokuapp.com/v1/api/getMessages')
             .set('Content-Type', 'application/x-www-form-urlencoded')
             .set('Authorization', 'Bearer ' + state.token)
             .query({ searchValue: this.state.inputValue })

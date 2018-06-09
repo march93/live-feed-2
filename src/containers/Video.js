@@ -32,12 +32,13 @@ export default class Streams extends Component {
         if (!this.block) {
             this.block = true;
             request
-                .get('http://127.0.0.1:5000/v1/api/getStreamMessages')
+                .get('https://polar-shelf-99397.herokuapp.com/v1/api/getStreamMessages')
                 .set('Content-Type', 'application/x-www-form-urlencoded')
                 .set('Authorization', 'Bearer ' + state.token)
                 .query({ videoID: this.state.videoID, pageToken: this.state.nextToken })
                 .end(function(err, res){
                     if (res) {
+                        console.log(res);
                         // append new messages and remove duplicates
                         var newMessages = this.state.messages.concat(res.body.items);
                         newMessages = _.uniqBy(newMessages, function(e) {
